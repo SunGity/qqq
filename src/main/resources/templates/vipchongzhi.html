@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/vipchongzhi}" method="POST">
+    会员id:<input type="text" id="vid" name="vid" th:value="${v.vid}" readonly="readonly"><br>
+余额：<input type="text" id="v1" name="v1" th:value="${v.vbalance}" readonly="readonly"><br>
+充值金额：<input type="text" id="v2" name="v2" ><br>
+    <input type="submit" value="充值" />
+</form>
+<a th:href="@{vip}">返回上一级</a>
+</body>
+</html>

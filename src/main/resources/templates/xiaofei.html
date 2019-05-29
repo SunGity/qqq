@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/xf}" method="POST">
+    <input type="hidden" name="fvid" th:value="${vip.vid}"/>
+    <br/>
+    余额：<br/>
+    <input type="text" name="vbalance2" th:value="${vip.vbalance}" readonly="readonly"/>
+    <br/>
+    积分：<br/>
+    <input type="text" name="vintegral2" th:value="${vip.vintegral}" readonly="readonly"/>
+    <br/>
+    消费者：<br/>
+    <input type="text" name="vname" th:value="${vip.vname}" readonly="readonly"/>
+    <br/>
+    消费者生日：<br/>
+    <input type="date" name="vbrith" th:value="${#dates.format(vip.vbrith, 'yyyy-MM-dd')}" readonly="readonly"/>
+    <br/>
+    消费金额：<br/>
+    <input type="text" name="fnum1" />
+    <br/>
+    <!--<td th:text="${#dates.format(ul.vbrith, 'yyyy-MM-dd')}"></td>-->
+    消费方式：<br/>
+    <select name="fangshi">
+        <option th:each="ul:${fang}" th:text="${ul.sfangshi}" th:value="${ul.sid}"></option>
+    </select>
+    <br/>
+    销售员：<br/>
+    <select name="fxid">
+        <option th:each="ul:${xiaoshou}" th:text="${ul.xname}" th:value="${ul.xid}"></option>
+    </select>
+    <br/>
+    <br>
+    <input type="submit" value="提交" />
+</form>
+<!--/*@thymesVar id="message" type="com.zlx.demo2.controller.UserController"*/-->
+<span th:text="${message}"></span>
+<a th:href="@{vip}">返回上一级</a>
+
+</body>
+</html>

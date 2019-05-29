@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.0.min.js}"></script>
+</head>
+<body>
+<a th:href="@{toAdd}">会员添加</a><br>
+<table border="1px">
+    <form  th:action="@{viptel}" method="post">
+        手机号查询：<input name="vtel" type="text" required="required"/>
+        <input type="submit" value="查询" />
+    </form>
+    <br>
+    <br>
+    <form  th:action="@{vipVid}" method="post">
+        id查询：<input name="vid" type="text" required="required"/>
+        <input type="submit" value="查询" />
+    </form>
+
+    <form  th:action="@{vip}" method="post" id="chaxunForm">
+        <input id="currPage" name="currPage" type="hidden" th:value="${p.currPage}"/>
+        <input id="rows" name="rows" type="hidden" th:value="${p.rows}"/>
+    </form>
+    <br>
+    <br>
+    <tr>
+        <td>姓名 </td>
+        <td>电话号</td>
+        <td>出生日期</td>
+        <td>会员积分</td>
+        <td>余额</td>
+        <td>充值</td>
+        <td>消费</td>
+    </tr>
+    <tr th:each="ul:${vip}">
+        <td th:text="${ul.vname }"></td>
+        <td th:text="${ul.vtel }"></td>
+        <td th:text="${#dates.format(ul.vbrith, 'yyyy-MM-dd')}"></td><!--<span th:text="${#dates.format(user.date, 'yyyy-MM-dd')}">4564546</span>-->
+        <!--<fmt:formatDate value='' pattern='yyyy-MM-dd'/>-->
+        <td th:text="${ul.vintegral }"></td>
+        <td th:text="${ul.vbalance }"></td>
+        <td><a th:href="@{'vipchong?vid='+${ul.vid}}">充值</a></td>
+        <td><a th:href="@{'xiaofeizhe?vid='+${ul.vid}}">消费</a></td>
+    </tr>
+</table>
+<p>
+    <span th:text="${p.currPage}+'/'+${p.totalPage}+'页'"></span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <sapn th:if="${p.currPage} ne 1">
+        <a th:href="@{'javascript:chaxun(1,'+${p.rows}+')'}">首页</a>
+        <a th:href="@{'javascript:chaxun('+${p.currPage-1}+','+${p.rows}+')'}">上一页</a>
+    </sapn>
+    <sapn th:if="${p.currPage} ne ${p.totalPage}">
+        <a th:href="@{'javascript:chaxun('+${p.currPage+1}+','+${p.rows}+')'}">下一页</a>
+        <a th:href="@{'javascript:chaxun('+${p.totalPage}+','+${p.rows}+')'}">末页</a>
+    </sapn>
+    <!-- < lt      gt >       le<=       ge>=-->
+
+</p>
+<a th:href="@{index}">返回上一级</a>
+</body>
+<script type="text/javascript" th:inline="javascript">
+
+    function chaxun(currPage,rows){
+        $("#currPage").val(currPage);
+        $("#rows").val(rows);
+        $("#chaxunForm").submit();
+
+    }
+
+    /*function del(id){
+        $.ajax({
+            type: "POST",
+            url: [[@{deleteUsers}]],
+        data:{"id":id},
+        dataType:"json",
+            success: function(data){
+            if(data.message){
+                alert("成功");
+                $("#chaxunForm").submit();
+                location.reload();
+            }else{
+                alert("失败");
+            }
+
+
+        },
+        error: function(){
+            alert("错误");
+        }
+    });
+    }*/
+
+
+    function  goTo(){
+        var c=$("#myinput").val();
+        var t='${p.totalPage}';
+        if(c>t){
+            $("#myinput").val(t);
+        }
+        $("#currPage").val($("#myinput").val());
+        $("#rows").val('${p.rows}');
+        $("#chaxunForm").submit();
+    }
+
+
+
+</script>
+</html>

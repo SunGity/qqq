@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.ntl.mapper.LoginMapper">
+    <select id="selectVipId" resultType="com.cn.ntl.entity.vip" parameterType="String">
+        select * from vip where vid=#{vid}
+    </select>
+    <select id="selectVip" resultType="com.cn.ntl.entity.vip">
+        select * from vip
+        limit #{number},#{pageSize}
+    </select>
+    <select id="selectVipVtel" resultType="com.cn.ntl.entity.vip" parameterType="com.cn.ntl.entity.vip">
+        select * from vip where vtel=#{vtel}
+    </select>
+    <select id="findCountVip" resultType="java.lang.Integer">
+       select  count(1)  from vip
+    </select>
+    <select id="findCountXiaoshou" resultType="java.lang.Integer">
+       select  count(1)  from xiaoshou
+    </select>
+    <select id="findCountXiaofei" resultType="java.lang.Integer">
+       select  count(1)  from xiaofei
+    </select>
+    <select id="selectXiaoshou" resultType="com.cn.ntl.entity.xiaoshou">
+        select * from xiaoshou limit #{number},#{pageSize}
+    </select>
+    <select id="selectXiaoshou1" resultType="com.cn.ntl.entity.xiaoshou">
+        select * from xiaoshou
+    </select>
+    <select id="selectFangshi" resultType="com.cn.ntl.entity.fangshi">
+        select * from fs
+    </select>
+    <select id="selectXiaofei" resultType="Map">
+        SELECT v.vname,f.sfangshi,s.xname,x.fnum,x.ftime FROM vip v,fs f,xiaofei X,xiaoshou s
+      where v.vid=x.fvid AND s.xid=x.fxid AND x.fangshi=f.sid limit #{number},#{pageSize}
+    </select>
+    <select id="selectXiaofei1" resultType="Map">
+        SELECT v.vname,f.sfangshi,s.xname,sum(x.fnum) fnum,x.ftime FROM vip v,fs f,xiaofei X,xiaoshou s
+        where v.vid=x.fvid AND s.xid=x.fxid AND x.fangshi=f.sid and MONTH(ftime)=#{moe}
+        group by s.xname order by sum(x.fnum) desc limit #{number},#{pageSize}
+    </select>
+    <select id="selectXiaofeiYeji" resultType="Map">
+        SELECT SUM(x.fnum) fnum FROM vip v,fs f,xiaofei X,xiaoshou s
+        WHERE v.vid=x.fvid AND s.xid=x.fxid AND x.fangshi=f.sid and x.fangshi=1 AND MONTH(ftime)=#{moe}
+    </select>
+    <select id="findCountXiaofei1" resultType="Map">
+        SELECT v.vname,f.sfangshi,s.xname,sum(x.fnum) fnum,x.ftime FROM vip v,fs f,xiaofei X,xiaoshou s
+        where v.vid=x.fvid AND s.xid=x.fxid AND x.fangshi=f.sid and MONTH(ftime)=#{moe}
+        group by s.xname
+    </select>
+    <resultMap id="Map" type="com.cn.ntl.entity.xiaofei">
+        <result column="vname" jdbcType="VARCHAR" property="vname"/>
+        <result column="sfangshi" jdbcType="VARCHAR" property="sfangshi"/>
+        <result column="xname" jdbcType="VARCHAR" property="xname"/>
+        <result column="fnum" jdbcType="VARCHAR" property="fnum"/>
+        <result column="ftime" jdbcType="TIMESTAMP" property="ftime"/>
+    </resultMap>
+    <select id="login" resultType="com.cn.ntl.entity.role" parameterType="com.cn.ntl.entity.role">
+        select * from role where rname=#{rname}
+    </select>
+    <select id="selectVtel" parameterType="com.cn.ntl.entity.vip" resultType="int">
+        select count(1) from vip where vtel=#{vtel}
+    </select>
+    <insert id="vipadd" parameterType="com.cn.ntl.entity.vip">
+      insert into vip(vid,vname,vtel,vbrith,vbalance) value(#{vid},#{vname},#{vtel},#{vbrith},#{vbalance})
+   </insert>
+    <select id="selectVtelxiaoshou" parameterType="com.cn.ntl.entity.xiaoshou" resultType="int">
+        select count(1) from xiaoshou where xtel=#{xtel}
+    </select>
+    <insert id="xiaoshouadd" parameterType="com.cn.ntl.entity.xiaoshou">
+      insert into xiaoshou(xid,xname,xtel) value(#{xid},#{xname},#{xtel})
+   </insert>
+    <insert id="xiaofeiadd" parameterType="com.cn.ntl.entity.xiaofei">
+      insert into xiaofei(fid,fvid,fxid,fnum,fangshi,ftime) value(#{fid},#{fvid},#{fxid},#{fnum},#{fangshi},#{ftime})
+   </insert>
+    <update id="vipUpdate" parameterType="com.cn.ntl.entity.vip">
+        update vip
+        <set>
+        <if test="vbalance != null">
+            vbalance = #{vbalance},
+        </if>
+        <if test="vintegral != null">
+            vintegral = #{vintegral}
+        </if>
+    </set>
+      where vid=#{vid}
+    </update>
+</mapper>

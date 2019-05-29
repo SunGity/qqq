@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<!–suppress ThymeleafVariablesResolveInspection –>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<form  th:action="@{/login}" method="POST">
+    账号：<br/>
+    <input type="text" name="rname" th:value="张三"/>
+    <br/>
+    密码：<br/>
+    <input type="password" name="rpassword" th:value="123456"/>
+    <br/>
+    <input type="submit" value="提交" />
+</form>
+<!--/*@thymesVar id="message" type="com.zlx.demo2.controller.UserController"*/-->
+<span th:text="${message}"></span>
+</body>
+</html>

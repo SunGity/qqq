@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1px">
+    <tr>
+        <td>姓名 </td>
+        <td>电话号</td>
+        <!--<td>出生日期</td>-->
+        <td>会员积分</td>
+        <td>余额</td>
+        <td>充值</td>
+        <td>消费</td>
+    </tr>
+    <tr th:each="ul:${vip}">
+        <td th:text="${ul.vname }"></td>
+        <td th:text="${ul.vtel }"></td>
+        <!--<td th:text="<fmt:formatDate value='${ul.vbrith}' pattern='yyyy-MM-dd'/>"></td>-->
+        <td th:text="${ul.vintegral }"></td>
+        <td th:text="${ul.vbalance }"></td>
+        <td><a th:href="@{'vipchong?vid='+${ul.vid}}">充值</a></td>
+        <td><a th:href="@{'xiaofeizhe?vid='+${ul.vid}}">消费</a></td>
+    </tr>
+</table>
+<a th:href="@{vip}">返回上一级</a>
+</body>
+</html>

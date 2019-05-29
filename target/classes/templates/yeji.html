@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1px">
+    <tr>
+        <td>月份</td>
+        <td>总消费额</td>
+        <!--<td>消费时间</td>-->
+    </tr>
+    <tr th:each="ul:${xiaofei}">
+        <td th:text="${moe}"></td>
+        <td th:text="${ul.fnum }"></td>
+        <!--<td th:text="<fmt:formatDate value='${ul.vbrith}' pattern='yyyy-MM-dd'/>"></td>-->
+    </tr>
+</table>
+</body>
+</html>

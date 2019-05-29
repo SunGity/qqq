@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/add}" method="POST">
+    用户名：<br/>
+    <input type="text" name="vname"/>
+    <br/>
+    手机号：<br/>
+    <input type="text" name="vtel"/>
+    <br/>
+    生日：<br/>
+    <input type="date" name="vbrith"/>
+    <br/>
+    充值金额：<br/>
+    <input type="text" name="vbalance"/>
+    <br/>
+    <input type="submit" value="添加" />
+</form>
+<!--/*@thymesVar id="message" type="com.zlx.demo2.controller.UserController"*/-->
+<span th:text="${message}"></span>
+<a th:href="@{vip}">返回上一级</a>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.0.min.js}"></script>
+</head>
+<body>
+<table border="1px">
+    <form  th:action="@{xiaofeijilu}" method="post" id="chaxunForm">
+        <input id="currPage" name="currPage" type="hidden" th:value="${p.currPage}"/>
+        <input id="rows" name="rows" type="hidden" th:value="${p.rows}"/>
+    </form>
+    <tr>
+        <td>消费者</td>
+        <td>消费方式</td>
+        <td>销售者</td>
+        <td>消费金额</td>
+        <!--<td>消费时间</td>-->
+    </tr>
+    <tr th:each="ul:${xiaofei}">
+        <td th:text="${ul.vname }"></td>
+        <td th:text="${ul.sfangshi }"></td>
+        <td th:text="${ul.xname }"></td>
+        <td th:text="${ul.fnum }"></td>
+        <!--<td th:text="<fmt:formatDate value='${ul.vbrith}' pattern='yyyy-MM-dd'/>"></td>-->
+    </tr>
+</table>
+<p>
+    <span th:text="${p.currPage}+'/'+${p.totalPage}+'页'"></span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <sapn th:if="${p.currPage} ne 1">
+        <a th:href="@{'javascript:chaxun(1,'+${p.rows}+')'}">首页</a>
+        <a th:href="@{'javascript:chaxun('+${p.currPage-1}+','+${p.rows}+')'}">上一页</a>
+    </sapn>
+    <sapn th:if="${p.currPage} ne ${p.totalPage}">
+        <a th:href="@{'javascript:chaxun('+${p.currPage+1}+','+${p.rows}+')'}">下一页</a>
+        <a th:href="@{'javascript:chaxun('+${p.totalPage}+','+${p.rows}+')'}">末页</a>
+    </sapn>
+    <!-- < lt      gt >       le<=       ge>=-->
+
+</p>
+<a th:href="@{index}">返回上一级</a>
+<form  th:action="@{xiaofeijilu1}" method="post">
+    <!--手机号查询：<input name="moe" type="text" />-->
+    <select name="moe">
+        <option th:each="i:${#numbers.sequence(1, 12)}" th:text="${i}"></option>
+        <!--<option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>-->
+    </select>
+    <input type="submit" value="按月查询" />
+</form>
+<form  th:action="@{xiaofeijiluyeji}" method="post">
+    <!--手机号查询：<input name="moe" type="text" />-->
+    <select name="moe">
+        <option th:each="i:${#numbers.sequence(1, 12)}" th:text="${i}"></option>
+        <!--<option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>-->
+    </select>
+    <input type="submit" value="按月查询总业绩" />
+</form>
+<!--<a th:href="@{xiaofeijilu}">按月查询</a>-->
+</body>
+<script type="text/javascript" th:inline="javascript">
+
+    function chaxun(currPage,rows){
+        $("#currPage").val(currPage);
+        $("#rows").val(rows);
+        $("#chaxunForm").submit();
+
+    }
+
+    /*function del(id){
+        $.ajax({
+            type: "POST",
+            url: [[@{deleteUsers}]],
+        data:{"id":id},
+        dataType:"json",
+            success: function(data){
+            if(data.message){
+                alert("成功");
+                $("#chaxunForm").submit();
+                location.reload();
+            }else{
+                alert("失败");
+            }
+
+
+        },
+        error: function(){
+            alert("错误");
+        }
+    });
+    }*/
+
+
+    function  goTo(){
+        var c=$("#myinput").val();
+        var t='${p.totalPage}';
+        if(c>t){
+            $("#myinput").val(t);
+        }
+        $("#currPage").val($("#myinput").val());
+        $("#rows").val('${p.rows}');
+        $("#chaxunForm").submit();
+    }
+
+
+
+</script>
+</html>
